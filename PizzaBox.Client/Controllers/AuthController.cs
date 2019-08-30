@@ -28,11 +28,11 @@ namespace  PizzBox.Client.Controllers
           }
           catch (System.Exception)
           {
-            return RedirectToAction("SignIn");
+            return RedirectToActionPermanent("Index", "Home");
           }
-          return RedirectToActionPermanent("Index", "Home");
+          return RedirectToActionPermanent("Index", "Main");
         }
-        return RedirectToAction("SignIn");
+        return RedirectToAction("Index", "Home");
       }
       [HttpGet]
       public IActionResult SignUp(){
@@ -44,14 +44,9 @@ namespace  PizzBox.Client.Controllers
         if(ModelState.IsValid){
           _db.Users.Add(newUser);
           _db.SaveChanges();
-          return RedirectToActionPermanent("Index","Home");
         }
-        return RedirectToAction("SignUp");
+        return RedirectToActionPermanent("Index", "Home");
       }
 
-      public IActionResult CheckSignIn(){
-
-        return RedirectToAction("SignIn");
-      }
     }
 }

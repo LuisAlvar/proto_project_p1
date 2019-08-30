@@ -1,0 +1,11 @@
+@model PizzaBox.Domain.Models.DbModels.User;
+
+@{
+  Layout = "../Shared/_UserLayout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome@{@if(Model != null){<span>, back @Model.FirstName @Model.LastName!</span>}}
+    </h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

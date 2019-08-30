@@ -12,9 +12,6 @@ namespace PizzaBox.Client.Controllers
     {
         public IActionResult Index()
         {
-          if(CurrentUser.Storage() != null){
-            return View(CurrentUser.Storage());
-          }
           return View();
         }
 
