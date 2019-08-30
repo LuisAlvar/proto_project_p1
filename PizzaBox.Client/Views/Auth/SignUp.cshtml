@@ -1,3 +1,5 @@
+@model PizzaBox.Domain.Models.DbModels.User;
+
 @{
   Layout = "../Shared/_Layout.cshtml";
 }
@@ -5,63 +7,63 @@
 <div class="row justify-content-md-center">
   <div class="col-md-8">
     <h3>Welcome to PizzaBox, Sign Up!</h3>
-    <form action="/Auth/CheckSignIn" method="post">
+    <form action="/Auth/SignUp" method="post">
       <div class="form-group">
-        <label for="textInputNewUserName">Username</label>
-        <input type="text" class="form-control" id="textInputNewUserName" maxlength="15" >
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username">
       </div>
 
       <div class="form-group">
         <div class="form-row">
           <div class="col">
-            <label for="textNewFirstName">First Name</label>
-            <input type="text" class="form-control" id="textInputNewFirstName">
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname">
           </div>
           <div class="col">
-            <label for="textNewLastName">Last Name</label>
-            <input type="text" class="form-control" id="textInputNewLastName">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" id="lastname" name="lastname">
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="testInputStreetAddress">Address</label>
-        <input type="text" class="form-control" id="testInputStreetAddress" placeholder="15992 Orange Grove St">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" placeholder="15992 Orange Grove St" name="address">
       </div>
       <div class="form-group">
-        <label for="testInputStreetAddress2">Address 2</label>
-        <input type="text" class="form-control" id="testInputStreetAddress2" placeholder="Apartment, studio, or floor">
+        <label for="address2">Address 2</label>
+        <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor" name="addres1">
       </div>
 
       <div class="form-group">
         <div class="form-row">
             <div class="col-md-6">
-                <label for="textInputCity">City</label>
-                <input type="text" class="form-control" id="textInputCity">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city">
             </div>
             <div class="col-md-4">
-              <label for="textInputState">State</label>
-              <input type="text" class="form-control" id="textInputState">
+              <label for="state">State</label>
+              <input type="text" class="form-control" id="state" name="state">
             </div>
             <div class="col-md-2">
-              <label for="textInputZipCode">Zip Code</label>
-              <input type="text" class="form-control" id="textInputZipCode">
+              <label for="zipcode">Zip Code</label>
+              <input type="text" class="form-control" id="zipcode" name="zipcode">
             </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="textInputEmail">Email address</label>
-        <input type="email" class="form-control" id="textInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+        <label for="phonenumber">Phone Number</label>
+        <input type="text" class="form-control" id="phonenumber" placeholder="phonenumber" name="phonenumber">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email">
       </div>
-      
+
       <div class="form-group">
-        <label for="AuthInputPasswordConfirm">Confirm Password</label>
-        <input type="password" class="form-control" id="AuthInputPasswordConfirm" placeholder="Confirm Password">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
       </div>
 
       <div class="form-group form-check">

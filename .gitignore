@@ -353,5 +353,7 @@ MigrationBackup/
 
 # Personalized for this project
 PizzaBox.Data/PizzaBoxDbContext.cs
+PizzaBox.Data/Migrations
 SQLScripts/
 Commands.txt
+.vscode
