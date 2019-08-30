@@ -5,14 +5,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Client.Models;
-
+using PizzaBox.Domain.Models.Singletons;
 namespace PizzaBox.Client.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+          if(CurrentUser.Storage() != null){
+            return View(CurrentUser.Storage());
+          }
+          return View();
         }
 
         public IActionResult Privacy()
