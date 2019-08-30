@@ -1,0 +1,74 @@
+@{
+  Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <h3>Welcome to PizzaBox, Sign Up!</h3>
+    <form action="/Auth/CheckSignIn" method="post">
+      <div class="form-group">
+        <label for="textInputNewUserName">Username</label>
+        <input type="text" class="form-control" id="textInputNewUserName" maxlength="15" >
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <label for="textNewFirstName">First Name</label>
+            <input type="text" class="form-control" id="textInputNewFirstName">
+          </div>
+          <div class="col">
+            <label for="textNewLastName">Last Name</label>
+            <input type="text" class="form-control" id="textInputNewLastName">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="testInputStreetAddress">Address</label>
+        <input type="text" class="form-control" id="testInputStreetAddress" placeholder="15992 Orange Grove St">
+      </div>
+      <div class="form-group">
+        <label for="testInputStreetAddress2">Address 2</label>
+        <input type="text" class="form-control" id="testInputStreetAddress2" placeholder="Apartment, studio, or floor">
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-6">
+                <label for="textInputCity">City</label>
+                <input type="text" class="form-control" id="textInputCity">
+            </div>
+            <div class="col-md-4">
+              <label for="textInputState">State</label>
+              <input type="text" class="form-control" id="textInputState">
+            </div>
+            <div class="col-md-2">
+              <label for="textInputZipCode">Zip Code</label>
+              <input type="text" class="form-control" id="textInputZipCode">
+            </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="textInputEmail">Email address</label>
+        <input type="email" class="form-control" id="textInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      
+      <div class="form-group">
+        <label for="AuthInputPasswordConfirm">Confirm Password</label>
+        <input type="password" class="form-control" id="AuthInputPasswordConfirm" placeholder="Confirm Password">
+      </div>
+
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="AuthTermsAndConditions">
+        <label class="form-check-label" for="AuthTermsAndConditions"><small>Check to agree on Terms and Conditions</small></label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

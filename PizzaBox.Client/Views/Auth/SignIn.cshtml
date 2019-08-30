@@ -1,0 +1,25 @@
+@{
+  Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <h3>Welcome, back! Please Sign In.</h3>
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="AuthRememberMe">
+        <label class="form-check-label" for="AuthRememberMe"><small>Remember Me</small></label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
