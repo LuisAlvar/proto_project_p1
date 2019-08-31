@@ -10,60 +10,78 @@
     <form action="/Auth/SignUp" method="post">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username">
+        <input type="text" class="form-control" id="username" asp-for="@Model.Username">
+        <span asp-validation-for="@Model.Username"></span>
       </div>
 
       <div class="form-group">
         <div class="form-row">
           <div class="col">
             <label for="firstname">First Name</label>
-            <input type="text" class="form-control" id="firstname" name="firstname">
+            <input type="text" class="form-control" id="firstname" asp-for="@Model.FirstName">
+            <span asp-validation-for="@Model.FirstName"></span>
           </div>
           <div class="col">
             <label for="lastname">Last Name</label>
-            <input type="text" class="form-control" id="lastname" name="lastname">
+            <input type="text" class="form-control" id="lastname" asp-for="@Model.LastName">
+            <span asp-validation-for="@Model.LastName"></span>
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="15992 Orange Grove St" name="address">
+        <input type="text" class="form-control" id="address" placeholder="15992 Orange Grove St" asp-for="@Model.Address">
+        <span asp-validation-for="@Model.Address"></span>
       </div>
       <div class="form-group">
         <label for="address2">Address 2</label>
-        <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor" name="addres1">
+        <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor" asp-for="@Model.Address2">
       </div>
 
       <div class="form-group">
         <div class="form-row">
             <div class="col-md-6">
                 <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city">
+                <input type="text" class="form-control" id="city" asp-for="@Model.City">
+                <span asp-validation-for="@Model.City"></span>
             </div>
             <div class="col-md-4">
               <label for="state">State</label>
-              <input type="text" class="form-control" id="state" name="state">
+              <input type="text" class="form-control" id="state" asp-for="@Model.State">
+              <span asp-validation-for="@Model.State"></span>
             </div>
             <div class="col-md-2">
               <label for="zipcode">Zip Code</label>
-              <input type="text" class="form-control" id="zipcode" name="zipcode">
+              <input type="text" class="form-control" id="zipcode" asp-for="@Model.ZipCode">
+              <span asp-validation-for="@Model.ZipCode"></span>
             </div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="phonenumber">Phone Number</label>
-        <input type="text" class="form-control" id="phonenumber" placeholder="phonenumber" name="phonenumber">
+        <input type="text" class="form-control" id="phonenumber" placeholder="phonenumber" asp-for="@Model.PhoneNumber">
+        <span asp-validation-for="@Model.PhoneNumber"></span>
       </div>
 
       <div class="form-group">
         <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" asp-for="@Model.Email">
+        <span asp-validation-for="@Model.Email"></span>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+        <input type="password" class="form-control" id="password" placeholder="Password" asp-for="@Model.Password">
+        <span asp-validation-for="@Model.Password"></span>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="confirmpassword">Confirm Password</label>
+        <input type="confirmpassword" class="form-control" id="confirmpassword" placeholder="Password" asp-for="@Model.ConfirmPassword">
+        <span asp-validation-for="@Model.ConfirmPassword"></span>
       </div>
 
       <div class="form-group form-check">
@@ -71,6 +89,7 @@
         <label class="form-check-label" for="AuthTermsAndConditions"><small>Check to agree on Terms and Conditions</small></label>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      @Html.AntiForgeryToken();
     </form>
   </div>
 </div>

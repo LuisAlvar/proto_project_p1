@@ -15,9 +15,10 @@ namespace  PizzBox.Client.Controllers
       private PizzaBoxDbContext _db = new PizzaBoxDbContext();
       [HttpGet]
       public IActionResult SignIn(){
-        return View();
+        return View(new PizzaBox.Domain.Models.DbModels.User());
       }
       [HttpPost]
+      [ValidateAntiForgeryToken]
       public IActionResult SignIn(PizzaBox.Domain.Models.DbModels.User potentUser){
         if( (potentUser.Username != null) && (potentUser.Password != null)){
           try
@@ -28,9 +29,11 @@ namespace  PizzBox.Client.Controllers
           }
           catch (System.Exception)
           {
-            return RedirectToActionPermanent("Index", "Home");
+            var errorUser = new PizzaBox.Domain.Models.DbModels.User();
+            errorUser.FetchDbError = "Invalid Username or Password";
+            return View(errorUser);
           }
-          return RedirectToActionPermanent("Index", "Main");
+          return RedirectToAction("Index", "Main");
         }
         return RedirectToAction("Index", "Home");
       }
@@ -40,6 +43,7 @@ namespace  PizzBox.Client.Controllers
       }
 
       [HttpPost]
+      [ValidateAntiForgeryToken]
       public IActionResult SignUp(PizzaBox.Domain.Models.DbModels.User newUser){
         if(ModelState.IsValid){
           _db.Users.Add(newUser);

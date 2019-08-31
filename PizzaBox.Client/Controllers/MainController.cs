@@ -11,14 +11,17 @@ using PizzaBox.Domain.Models.Singletons;
 namespace PizzaBox.Client.Controllers{
   public class MainController: Controller{
     public IActionResult Index(){ //redirect user to render the starter template _UserLayout.cshtml
-      if(!CurrentUser.IsEmpty()){
-        return View(CurrentUser.Storage());
+      if(CurrentUser.IsEmpty()){
+        return RedirectToAction("Index","Home");
       }
-      return RedirectToActionPermanent("Index", "Home");
+      return View(CurrentUser.Storage());
     }
-    public IActionResult Logout(){
+
+    [HttpGet]
+    public IActionResult Signout(){
       CurrentUser.DeleteStorage();
-      return RedirectToActionPermanent("Index", "Home");
+      return RedirectToAction("Index", "Home");
     }
+
   }
 }
