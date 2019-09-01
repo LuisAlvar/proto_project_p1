@@ -23,7 +23,8 @@ namespace PizzaBox.Client.Controllers{
       }
       catch (System.Exception)
       {
-        CurrentUser.Storage().FetchDbError = "Unable to read your location.";
+        CurrentUser.Storage().Messages.MessageType = "LocationListDbError";
+        CurrentUser.Storage().Messages.FetchDbError = "Unable to read your location.";
       } 
       return View(CurrentUser.Storage());
     }

@@ -8,8 +8,8 @@
   <div class="col-md-8">
     <h3>Welcome, back! Please Sign In.</h3>
     @{
-      @if(Model.FetchDbError == "Invalid Username or Password"){
-        <div class="alert alert-danger">@Model.FetchDbError</div>
+      @if(@Model.Messages.MessageType == "LoginError"){
+        <div class="alert alert-danger">@Model.Messages.FetchDbError</div>
       }
     }
     <form action="/auth/signin" method="post" novalidate>
