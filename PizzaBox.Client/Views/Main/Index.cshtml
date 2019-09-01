@@ -5,7 +5,42 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome@{@if(Model != null){<span>, back @Model.FirstName @Model.LastName!</span>}}
-    </h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h3 class="display-5">Welcome@{@if(Model != null){<span>, back @Model.FirstName @Model.LastName!</span>}}
+    </h3>
+    @{
+      //if user is allowd to order, then display this 
+      if(true){
+        <div class="container col-md-12">
+          <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h3 class="display-6">PizzaBox Order System</h3>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultrices odio ipsum, et cursus felis tristique vel. Ut ut metus euismod, fringilla neque eu, elementum tortor. Donec eu ullamcorper dui, in aliquam est. Nam nisi urna, porta sed commodo ac, semper vel orci.</p>
+          </div>
+
+          <div class="container col-md-6">
+            <div class="card-deck mb-1">
+              <div class="card mb-6 shadow-sm">
+                <div class="card-header">
+                  <h4>Nearest Locations</h4>
+                </div>
+                <div class="card-body">
+                  <form action="/Main/SelectedLocation" method="post">
+                      <fieldset name="LocationRadioButton" class="list-group">
+                        @foreach(var locaitonObject in Model.NearestLocations){
+                          <label class="list-group-item d-flex justify-content-left align-items-center list-group-item-action"><input type="radio" value="@locaitonObject.Id" asp-for="@Model.SelectedLocation">@locaitonObject.Address</label>
+                        }
+                      </fieldset>
+                      <br/>
+                      <button type="submit" class="btn btn-outline-secondary">Select</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      }else{
+        <div class="alert alert-danger">Unable to order right now due to time limit restrictions.</div>
+      }
+      //otherwist display this
+    }
 </div>

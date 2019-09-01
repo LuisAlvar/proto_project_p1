@@ -1,0 +1,55 @@
+@model PizzaBox.Domain.Models.DbModels.User;
+
+@{
+  Layout = "../Shared/_UserLayout.cshtml";
+}
+
+@{
+  <form action='/Order/AddPizzaToOrder' method='post'>
+    <div class="container col-md-12">
+      <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm"> 
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Size</h4>
+          </div>
+          <div class="card-body">          
+            <fieldset class="list-group">
+              @foreach(var sizeObject in @ViewBag.SizeList){
+                <label class="list-group-item d-flex list-group-item-action"><input type="radio" value="@sizeObject.Id" asp-for="@Model.SelectedSize">@sizeObject.Name</label>
+              }
+            </fieldset>
+          </div>
+        </div> 
+        
+        <div class="card mb-4 shadow-sm"> 
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Crust</h4>
+          </div>
+          <div class="card-body">
+            <fieldset name="Radiobutton">
+              @foreach(var crustObject in @ViewBag.CrustList){
+                <label class="list-group-item d-flex list-group-item-action"><input type="radio" value="@crustObject.Id" asp-for="@Model.SelectedCrust">@crustObject.Name</label>
+              }
+            </fieldset>
+          </div>
+        </div> 
+
+        <div class="card mb-4 shadow-sm"> 
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Toppings</h4>
+          </div>
+          <div class="card-body">
+            <h5>Max of #5 Toppings</h5>
+            <hr/>
+            <fieldset name="Checkbox" class="list-group">
+              @foreach(var toppingObject in @ViewBag.ToppingList){
+                <label class="list-group-item d-flex list-group-item-action"><input type="checkbox" value="@toppingObject.Id" name="SelectedToppings"> @toppingObject.Name</label>
+              }
+            </fieldset>
+          </div>
+        </div> 
+      </div>
+    </div> 
+    <button type="submit" class="btn btn-outline-primary">Add To Order</button>
+  </form>
+}

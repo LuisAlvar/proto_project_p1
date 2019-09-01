@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,11 +29,21 @@ namespace PizzaBox.Domain.Models.DbModels{
     [Required(ErrorMessage="Need your Phone Number")]
     [DataType(DataType.PhoneNumber)]
     public string PhoneNumber { get; set; }
-
+    //NOT MAPPED PROPERTIES
     [NotMapped]
     public string FetchDbError {get; set;}
     [Required(ErrorMessage="Need to Confirm Password")]
     [NotMapped]
     public string ConfirmPassword { get; set; }
+    [NotMapped]
+    public List<Location> NearestLocations { get; set; }
+    [NotMapped]
+    public int SelectedLocation {get;set;}
+    [NotMapped]
+    public int SelectedSize {get; set;}
+    [NotMapped]
+    public int SelectedCrust { get; set; }
+    [NotMapped]
+    public List<int> SelectedToppings {get; set;}
   }
 }
