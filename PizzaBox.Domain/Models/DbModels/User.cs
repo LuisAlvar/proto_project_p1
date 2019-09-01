@@ -29,7 +29,8 @@ namespace PizzaBox.Domain.Models.DbModels{
     [Required(ErrorMessage="Need your Phone Number")]
     [DataType(DataType.PhoneNumber)]
     public string PhoneNumber { get; set; }
-    //NOT MAPPED PROPERTIES
+
+    /**********Not Mapped Properties *************************/
     [NotMapped]
     public string FetchDbError {get; set;}
     [Required(ErrorMessage="Need to Confirm Password")]
@@ -45,5 +46,9 @@ namespace PizzaBox.Domain.Models.DbModels{
     public int SelectedCrust { get; set; }
     [NotMapped]
     public List<int> SelectedToppings {get; set;}
+    [NotMapped]
+    public string MessageToUser { get; set; }
+    [NotMapped]
+    public Messages Messages { get; set; }
   }
 }

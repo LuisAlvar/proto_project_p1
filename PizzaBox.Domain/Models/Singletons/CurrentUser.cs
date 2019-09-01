@@ -21,6 +21,7 @@ namespace PizzaBox.Domain.Models.Singletons{
     public static void SetStorage(DbModels.User authUser){
       _CurrentUserInfo = new PizzaBox.Domain.Models.DbModels.User();
       _CurrentUserInfo = authUser;
+      _CurrentUserInfo.Messages = new PizzaBox.Domain.Models.Messages();
     }
 
     public static void SetLocationStorage(List<DbModels.Location> list){
