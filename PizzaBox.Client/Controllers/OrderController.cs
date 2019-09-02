@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.Models.Singletons;
 using PizzaBox.Domain.Models.DbModels;
+using Microsoft.EntityFrameworkCore;
 using PizzaBox.Data;
 
 namespace PizzaBox.Client.Controllers{
@@ -63,9 +64,28 @@ namespace PizzaBox.Client.Controllers{
     [HttpPost]
     public IActionResult Submit(){
       //the order is ready to be send to the database 
+      //Phrase 1: select the order 
+      var revisedOrder = new Order();
+      revisedOrder.Id = 0;
+      revisedOrder.Location = UsersOrder.Storage().Location;
+      revisedOrder.OrderCreated = UsersOrder.Storage().OrderCreated;
+      revisedOrder.User = UsersOrder.Storage().User;
 
+      using(var transaction = _db.Database.BeginTransaction()){
+        _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].Orders ON");
+        _db.Orders.Add(UsersOrder.Storage());
+        _db.SaveChanges();
+        _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].Orders OFF");
+        transaction.Commit();
+      }
+
+      var orderlistDB =  _db.Orders.ToList();
       //remove order infomation 
-      return View();
+      return RedirectToAction("PrintReceipts", "Order");
+    }
+
+    public IActionResult PrintReceipts(){
+      return RedirectToAction("Index", "Order");
     }
 
     public IActionResult Cart(){
@@ -101,11 +121,17 @@ namespace PizzaBox.Client.Controllers{
         newPizzaToPlace.Cost += newPizzaToPlace.Size.Price;
 
         newPizzaToPlace.Toppings = new List<Topping>();
+        newPizzaToPlace.Description = "";
+
         foreach (var selectedToppingId in a.SelectedToppings)
         {
             var fetchTopping = _db.Toppings.Single(t => t.Id == selectedToppingId);
+            newPizzaToPlace.Description += fetchTopping.Name + " ";
+
             newPizzaToPlace.Toppings.Add(fetchTopping);
             newPizzaToPlace.Cost += fetchTopping.Price;
+
+
         }
         UsersOrder.Storage().Pizzas.Add(newPizzaToPlace);
     }
