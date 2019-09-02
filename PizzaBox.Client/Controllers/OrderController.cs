@@ -28,6 +28,9 @@ namespace PizzaBox.Client.Controllers{
 
     [HttpGet]
     public IActionResult AddPizzaToOrder(){
+      if(CurrentUser.IsEmpty()){
+        return RedirectToAction("Index", "Home");
+      }
       return View(CurrentUser.Storage());
     }
 
@@ -63,14 +66,6 @@ namespace PizzaBox.Client.Controllers{
 
     [HttpPost]
     public IActionResult Submit(){
-      //the order is ready to be send to the database 
-      //Phrase 1: select the order 
-      var revisedOrder = new Order();
-      revisedOrder.Id = 0;
-      revisedOrder.Location = UsersOrder.Storage().Location;
-      revisedOrder.OrderCreated = UsersOrder.Storage().OrderCreated;
-      revisedOrder.User = UsersOrder.Storage().User;
-
       using(var transaction = _db.Database.BeginTransaction()){
 
         _db.Orders.Add(new Order(){
@@ -92,17 +87,15 @@ namespace PizzaBox.Client.Controllers{
           });
         }
         _db.SaveChanges();
-
         transaction.Commit();
       }
-
-      var orderlistDB =  _db.Orders.ToList();
+      CurrentUser.Storage().UserAbleToOrder = false;
       //remove order infomation 
-      return RedirectToAction("PrintReceipts", "Order");
+      return RedirectToAction("Receipt", "Order");
     }
-
-    public IActionResult PrintReceipts(){
-      return RedirectToAction("Index", "Order");
+    
+    public IActionResult History(){
+      return View(CurrentUser.Storage());
     }
 
     public IActionResult Cart(){
@@ -110,6 +103,12 @@ namespace PizzaBox.Client.Controllers{
         CurrentUser.Storage().Messages.MessageType = "";
       }
       return View(UsersOrder.Storage());
+    }
+
+    public IActionResult Receipt(){
+      CurrentUser.Storage().Messages.MessageType = "OrderSuccessfulCommited";
+      CurrentUser.Storage().Messages.MessageToUser = "Your order was successfully sent.";
+      return View(CurrentUser.Storage());
     }
 
     private bool CheckSelections(User a){

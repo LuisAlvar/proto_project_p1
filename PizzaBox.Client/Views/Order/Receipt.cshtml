@@ -1,0 +1,14 @@
+@model PizzaBox.Domain.Models.DbModels.User;
+
+@{
+  Layout = "../Shared/_UserLayout.cshtml";
+}
+
+@switch (@Model.Messages.MessageType)
+{
+    case "OrderSuccessfulCommited":
+      <div class="alert alert-success">@Model.Messages.MessageToUser</div>
+      break;
+    default:
+      break;
+}

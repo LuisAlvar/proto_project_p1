@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace PizzaBox.Domain.Models.Singletons{
   public class CurrentUser{
     private static DbModels.User _CurrentUserInfo;
-    private static DbModels.Location _selectableLocations;
+    // private static DbModels.Location _selectableLocations;
 
     public static DbModels.User Storage(){
       if(_CurrentUserInfo != null){
@@ -34,7 +34,10 @@ namespace PizzaBox.Domain.Models.Singletons{
       return _CurrentUserInfo.NearestLocations;
     }
 
-
+    public static bool CheckIfUserCanOrder(){
+      
+      return false;
+    }
     public static void DeleteStorage(){
       _CurrentUserInfo = null;
     }

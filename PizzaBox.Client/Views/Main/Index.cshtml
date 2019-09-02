@@ -9,7 +9,7 @@
     </h3>
     @{
       //if user is allowd to order, then display this 
-      if(true){
+      if(@Model.UserAbleToOrder){
         <div class="container col-md-12">
           <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h3 class="display-6">PizzaBox Order System</h3>
@@ -39,7 +39,14 @@
         </div>
         
       }else{
-        <div class="alert alert-danger">Unable to order right now due to time limit restrictions.</div>
+        @switch(@Model.Messages.MessageType){
+          case "OrderSuccessfulCommited":
+            <div class="alert alert-success">@Model.Messages.MessageToUser</div>
+            break;
+          case "UnableToOrder":
+            <div class="alert alert-warning">@Model.Messages.MessageToUser</div>
+            break;
+        }
       }
       //otherwist display this
     }

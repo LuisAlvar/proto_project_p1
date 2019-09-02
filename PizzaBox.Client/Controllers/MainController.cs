@@ -18,14 +18,40 @@ namespace PizzaBox.Client.Controllers{
       }
       try
       {
-        var locationList = _db.Locations.ToList();
-        CurrentUser.SetLocationStorage(locationList);
+        //This fetchs the most recent order that the user has been 
+        var listOfUserOrders = _db.Orders.Where(o => o.UserId == CurrentUser.Storage().Id).Last(); 
+        if(listOfUserOrders.UserId == CurrentUser.Storage().Id){
+          const long TicksPerHour = 36000000000;
+          DateTime projectedTime = (DateTime) listOfUserOrders.OrderCreated;
+          projectedTime = projectedTime.AddTicks(TicksPerHour*2);
+          if(DateTime.Now.Ticks < projectedTime.Ticks){
+            CurrentUser.Storage().UserAbleToOrder = false;
+            CurrentUser.Storage().Messages.MessageType = "UnableToOrder";
+            CurrentUser.Storage().Messages.MessageToUser = "You can't create a new order due to time restrictions";
+          }else{
+            CurrentUser.Storage().UserAbleToOrder = true;
+          }
+        }
       }
       catch (System.Exception)
       {
-        CurrentUser.Storage().Messages.MessageType = "LocationListDbError";
-        CurrentUser.Storage().Messages.FetchDbError = "Unable to read your location.";
-      } 
+        //catch gets execute if user has not order before -> new user
+        CurrentUser.Storage().UserAbleToOrder = true;
+      }
+
+      if(CurrentUser.Storage().UserAbleToOrder){
+        try
+        {
+          var locationList = _db.Locations.ToList();
+          CurrentUser.SetLocationStorage(locationList);
+        }
+        catch (System.Exception)
+        {
+          CurrentUser.Storage().Messages.MessageType = "LocationListDbError";
+          CurrentUser.Storage().Messages.FetchDbError = "Unable to read your location.";
+        } 
+      }
+
       return View(CurrentUser.Storage());
     }
 
@@ -47,5 +73,6 @@ namespace PizzaBox.Client.Controllers{
 
       return RedirectToAction("Index", "Order");
     }
+
   }
 }
