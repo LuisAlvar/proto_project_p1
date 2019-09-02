@@ -8,8 +8,16 @@
 
   <form action='/Order/AddPizzaToOrder' method='post'>
     <div class="container col-md-12">
-        @if(@Model.Messages.MessageType == "AddedToOrder"){
-          <div class="alert alert-success text-center">@Model.Messages.MessageToUser</div>
+        @switch (@Model.Messages.MessageType)
+        {
+          case "AddedToOrder":
+            <div class="alert alert-success text-center">@Model.Messages.MessageToUser</div>
+            break;
+          case "PizzaProcessError":
+            <div class="alert alert-warning text-center">@Model.Messages.MessageToUser</div>
+            break;
+          default:
+            break;
         }
       <div class="card-deck mb-3 text-center">
         <div class="card mb-4 shadow-sm"> 

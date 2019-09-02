@@ -1,0 +1,56 @@
+@model PizzaBox.Domain.Models.DbModels.Order;
+
+@{
+  Layout = "../Shared/_UserLayout.cshtml";
+  ViewBag.TotalCost = 0;
+}
+
+<div class= "row justify-content-md-center">
+  <div class="col-md-8">
+    <h4>Order</h4>
+    <div>
+        <ul class="list-group">
+          @for(int i = 0; i < @Model.Pizzas.Count; ++i){
+            var currentPizza = @Model.Pizzas[i];
+            var pizzaStr = $"{i+1}. Pizza";
+            @ViewBag.TotalCost += @currentPizza.Cost;
+            <li class="list-group-item">
+              <span>@pizzaStr</span>
+              <br/>
+              <div class="d-flex">
+                <p class="ml-3">Crust:</p>
+                <p class="ml-4">@currentPizza.Crust.Name</p>
+                <p class="ml-4">$@currentPizza.Crust.Price</p>
+              </div>
+              
+              <div class="d-flex">
+                <p class="ml-3">Size:</p>
+                <p class="ml-5">@currentPizza.Size.Name</p>
+                <p class="ml-5">$@currentPizza.Size.Price</p>
+              </div>
+              
+              <div>
+                <p class="ml-3">Toppings:</p>
+                @foreach(var toppingObject in @currentPizza.Toppings){
+                  <div class="d-flex" style="margin-left: 6em">
+                    <p class="margin-left: 6em">@toppingObject.Name</p>
+                    <p class="ml-5">$@toppingObject.Price</p>
+                  </div>
+                }
+              </div>
+              <div>
+                <p>Total Cost: $@currentPizza.Cost</p>
+              </div>
+            </li>
+            <br />
+          }
+        </ul>
+        <div>
+          <p>Subtotal: $@ViewBag.TotalCost</p>
+        </div>
+        <form action="/Order/Submit" method="Post">
+          <button class="btn btn-outline-primary" type="submit">Submit Order</button>
+        </form>
+    </div>
+  </div>
+</div>

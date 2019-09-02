@@ -52,10 +52,44 @@ namespace PizzaBox.Client.Controllers{
       // else{
         // AddPizzaToUsersOrder(ref a);
       // }
+      //Check for max toppings 
+      if(!CheckSelections(a)) return RedirectToAction("Index", "Order");
       AddPizzaToUsersOrder(a);
       CurrentUser.Storage().Messages.MessageType = "AddedToOrder";
       CurrentUser.Storage().Messages.MessageToUser = $"Added a {UsersOrder.Storage().Pizzas.Last().Size.Name} and {UsersOrder.Storage().Pizzas.Last().Crust.Name} pizza to your order!";
       return RedirectToAction("Index", "Order");
+    }
+
+    [HttpPost]
+    public IActionResult Submit(){
+      //the order is ready to be send to the database 
+
+      //remove order infomation 
+      return View();
+    }
+
+    public IActionResult Cart(){
+      if(CurrentUser.Storage().Messages != null){
+        CurrentUser.Storage().Messages.MessageType = "";
+      }
+      return View(UsersOrder.Storage());
+    }
+
+    private bool CheckSelections(User a){
+      if(a.SelectedToppings.Count > 5){
+        CurrentUser.Storage().Messages.MessageType = "PizzaProcessError";
+        CurrentUser.Storage().Messages.MessageToUser = "The topping limit is 5.";
+        return false;
+      }else if(a.SelectedCrust == 0){
+        CurrentUser.Storage().Messages.MessageType = "PizzaProcessError";
+        CurrentUser.Storage().Messages.MessageToUser = "You forgot to select a crust.";
+        return false;
+      }else if(a.SelectedSize == 0){
+        CurrentUser.Storage().Messages.MessageType = "PizzaProcessError";
+        CurrentUser.Storage().Messages.MessageToUser = "You forgot to select a size.";
+        return false;
+      }
+      return true;
     }
 
     private void AddPizzaToUsersOrder(User a){
