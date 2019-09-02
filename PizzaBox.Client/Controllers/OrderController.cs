@@ -72,10 +72,27 @@ namespace PizzaBox.Client.Controllers{
       revisedOrder.User = UsersOrder.Storage().User;
 
       using(var transaction = _db.Database.BeginTransaction()){
-        _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].Orders ON");
-        _db.Orders.Add(UsersOrder.Storage());
+
+        _db.Orders.Add(new Order(){
+          OrderCreated = UsersOrder.Storage().OrderCreated,
+          LocationId = UsersOrder.Storage().Location.Id,
+          UserId = CurrentUser.Storage().Id
+        });
+
         _db.SaveChanges();
-        _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].Orders OFF");
+        var fetchOrderId = _db.Orders.Single(o => o.OrderCreated == UsersOrder.Storage().OrderCreated).Id;
+        foreach (var PizzaObject in UsersOrder.Storage().Pizzas)
+        {
+          _db.Pizzas.Add(new Pizza(){
+            CrustId = PizzaObject.Crust.Id,
+            SizeId = PizzaObject.Size.Id,
+            Cost = PizzaObject.Cost,
+            Description = PizzaObject.Description,
+            OrderId = fetchOrderId
+          });
+        }
+        _db.SaveChanges();
+
         transaction.Commit();
       }
 
