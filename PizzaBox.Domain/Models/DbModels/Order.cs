@@ -21,5 +21,7 @@ namespace PizzaBox.Domain.Models.DbModels{
     public User User { get; set; }
     [NotMapped]
     public List<Pizza> Pizzas { get; set; }
+    [NotMapped]
+    public decimal Cost { get; set;}
   }
 }

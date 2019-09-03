@@ -24,7 +24,9 @@ namespace PizzaBox.Domain.Models.Singletons{
         _Order = anOrder;
       }
     }
-
+    public static void DeleteStorage(){
+      _Order = new Order();
+    }
     private UsersOrder(){}
   }
 }

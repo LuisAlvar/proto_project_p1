@@ -90,17 +90,52 @@ namespace PizzaBox.Client.Controllers{
         transaction.Commit();
       }
       CurrentUser.Storage().UserAbleToOrder = false;
+      UsersOrder.DeleteStorage(); 
       //remove order infomation 
       return RedirectToAction("Receipt", "Order");
     }
     
     public IActionResult History(){
+      CurrentUser.Storage().OrderHistory = new List<Order>();
+      CurrentUser.Storage().OrderHistory = _db.Orders.Where(o => o.UserId == CurrentUser.Storage().Id).ToList();
+      foreach(var orderObject in CurrentUser.Storage().OrderHistory){
+        orderObject.Pizzas = new List<Pizza>();
+        orderObject.Pizzas = _db.Pizzas.Where(p => p.OrderId == orderObject.Id).ToList();
+        decimal orderTotalCost = 0;
+        foreach(var pizzaObject in orderObject.Pizzas){
+          var sizeDb = _db.Sizes.Single(s => s.Id == pizzaObject.SizeId);
+          pizzaObject.Size = new Size();
+          pizzaObject.Size.Id = sizeDb.Id;
+          pizzaObject.Size.Name = sizeDb.Name;
+          pizzaObject.Size.Price = sizeDb.Price;
+          var crustDb = _db.Crusts.Single(c => c.Id == pizzaObject.CrustId);
+          pizzaObject.Crust = new Crust();
+          pizzaObject.Crust.Id = crustDb.Id;
+          pizzaObject.Crust.Name = crustDb.Name;
+          pizzaObject.Crust.Price = crustDb.Price;
+
+          string[] toppingsArr = pizzaObject.Description.Split(' ');
+          pizzaObject.Toppings = new List<Topping>();
+          for (var i = 0; i < toppingsArr.Count()-1; ++i)
+          {
+            pizzaObject.Toppings.Add(_db.Toppings.Single(t => t.Name == toppingsArr[i]));
+          }
+          orderTotalCost += pizzaObject.Cost;
+        }
+        orderObject.Cost = orderTotalCost;
+      }
+
       return View(CurrentUser.Storage());
     }
 
     public IActionResult Cart(){
       if(CurrentUser.Storage().Messages != null){
         CurrentUser.Storage().Messages.MessageType = "";
+      }
+      //if the user is wants to re-access the cart after a order he will be 
+      //sent back to the main index
+      if(!CurrentUser.Storage().UserAbleToOrder){
+        return RedirectToAction("Index", "Main");
       }
       return View(UsersOrder.Storage());
     }

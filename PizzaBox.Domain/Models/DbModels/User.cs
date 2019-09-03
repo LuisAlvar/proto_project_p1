@@ -52,5 +52,7 @@ namespace PizzaBox.Domain.Models.DbModels{
     public Messages Messages { get; set; }
     [NotMapped]
     public bool UserAbleToOrder { get; set;}
+    [NotMapped]
+    public List<Order> OrderHistory { get; set;}
   }
 }

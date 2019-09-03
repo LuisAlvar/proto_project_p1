@@ -1,0 +1,63 @@
+@model PizzaBox.Domain.Models.DbModels.User;
+
+@{
+  Layout = "../Shared/_UserLayout.cshtml";
+  ViewBag.TotalOrderCost = 0;
+}
+
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <h4>Order History</h4>
+    <div>
+        <ul class="list-group">
+          @for(int i = 0; i < @Model.OrderHistory.Count; ++i){
+            var currentOrder = @Model.OrderHistory[i];
+            var orderStr = $"{i+1}. Order created at {currentOrder.OrderCreated.ToString("MM/dd/yyyy hh:mm:ss")}";
+            <li class="list-group-item">
+              <span>@orderStr</span>
+              <br />
+              <br />
+              @for(int j = 0; j < @currentOrder.Pizzas.Count; ++j){
+                var currentPizza = @currentOrder.Pizzas[j];
+                var pizzStr = $"{j+1}. Pizza";
+                <span>@pizzStr</span>
+                <br/>
+                <div class="d-flex">
+                  <p class="ml-3">Crust:</p>
+                  <p class="ml-4">@currentPizza.Crust.Name</p>
+                  <p class="ml-4">$@currentPizza.Crust.Price</p>
+                </div>
+                
+                <div class="d-flex">
+                  <p class="ml-3">Size:</p>
+                  <p class="ml-5">@currentPizza.Size.Name</p>
+                  <p class="ml-5">$@currentPizza.Size.Price</p>
+                </div>
+                
+                <div>
+                  <p class="ml-3">Toppings:</p>
+                  @foreach(var toppingObject in @currentPizza.Toppings){
+                    <div class="d-flex" style="margin-left: 6em">
+                      <p class="margin-left: 6em">@toppingObject.Name</p>
+                      <p class="ml-5">$@toppingObject.Price</p>
+                    </div>
+                  }
+                </div>
+                <div>
+                  <p>Total Cost: $@currentPizza.Cost</p>
+                </div>
+              }
+              <div>
+                <p>Total Order Cost: @currentOrder.Cost</p>
+              </div>
+            </li>
+            <br />
+          }
+        </ul>
+        <form action="/Order/Submit" method="Post">
+          <button class="btn btn-outline-primary" type="submit">Submit Order</button>
+        </form>
+    </div>
+
+  </div>
+</div>
